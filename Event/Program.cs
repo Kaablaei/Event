@@ -3,9 +3,11 @@
 
 
 using System.Drawing;
+using System.Numerics;
 using System.Reflection.Emit;
 
 Player p = new Player();
+Grop Gp = new Grop(p);
 p.OnAchlievementUnlocked += P_OnAchlievementUnlocked;
 
 p.LevelChange += P_OnLevelChangeHandler;
@@ -31,6 +33,8 @@ p.AddPoint();
 
 
 
+
+Console.WriteLine("GropLevel : " + Gp.GropLevel);
 
 public class Player
 {
