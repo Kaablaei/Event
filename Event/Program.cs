@@ -18,8 +18,6 @@ public class Player
 {
     public int Level { get; set; }
 
-
-
     public void AddPoint()
     {
         Level += 10;
