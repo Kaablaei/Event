@@ -8,11 +8,12 @@ using System.Reflection.Emit;
 Player p = new Player();
 p.OnAchlievementUnlocked += P_OnAchlievementUnlocked;
 
-p.OnLevelChangeHandler += P_OnLevelChangeHandler;
+p.LevelChange += P_OnLevelChangeHandler;
 
-void P_OnLevelChangeHandler(object sender, LevelGangeEventArgs e)
+void P_OnLevelChangeHandler(object sender, LevelChangeEventArgs e)
 {
     Console.WriteLine($"You Get {e.NewPoint} Point ,Your Level is {e.TotalPoint}");
+
 }
 
 void P_OnAchlievementUnlocked(int Point)
@@ -37,19 +38,20 @@ public class Player
 
 
     public delegate void AchlievementUnlocked(int Point);
-
     public event AchlievementUnlocked? OnAchlievementUnlocked;
 
 
-    public delegate void LevelChangeHandler(object sender, LevelGangeEventArgs e);
-    public event LevelChangeHandler? OnLevelChangeHandler;
+    //public delegate void LevelChangeHandler(object sender, LevelGangeEventArgs e);
+    //public event LevelChangeHandler? OnLevelChangeHandler;
+
+    public event EventHandler<LevelChangeEventArgs>? LevelChange;
 
 
     public void AddPoint()
     {
         Level += 10;
         //Console.WriteLine($"You Get 10 Point ,Your Level is {Level}");
-        OnLevelChangeHandler?.Invoke(this,new LevelGangeEventArgs(10,Level));
+        LevelChange?.Invoke(this,new LevelChangeEventArgs(10,Level));
 
         if (Level >= 50)
         {
@@ -62,12 +64,12 @@ public class Player
 }
 
 
-public class LevelGangeEventArgs : EventArgs
+public class LevelChangeEventArgs : EventArgs
 {
     public int NewPoint {  get;  }
     public int TotalPoint { get;  }
 
-    public LevelGangeEventArgs(int newpoint, int totalpoint)
+    public LevelChangeEventArgs(int newpoint, int totalpoint)
     {
         NewPoint = newpoint;
         TotalPoint = totalpoint;
