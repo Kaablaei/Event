@@ -2,12 +2,14 @@
 
 
 
+using System.Drawing;
+
 Player p = new Player();
 p.OnAchlievementUnlocked += P_OnAchlievementUnlocked;
 
-void P_OnAchlievementUnlocked()
+void P_OnAchlievementUnlocked(int Point)
 {
-    Console.WriteLine("50");
+    Console.WriteLine(Point);
 }
 
 p.AddPoint();
@@ -26,7 +28,7 @@ public class Player
     public int Level { get; set; }
 
 
-    public delegate void AchlievementUnlocked();
+    public delegate void AchlievementUnlocked(int Point);
 
     public event AchlievementUnlocked? OnAchlievementUnlocked;
 
@@ -38,7 +40,7 @@ public class Player
         if(Level >= 50)
         {
             //Console.WriteLine("50");
-            OnAchlievementUnlocked?.Invoke();
+            OnAchlievementUnlocked?.Invoke(Level);
         }
     }
 
